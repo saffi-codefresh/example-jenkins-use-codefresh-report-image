@@ -4,7 +4,17 @@ pipeline {
     stages {
         stage('Clone repository') {               
             steps {
+                sh '''
+                echo "Before checkout ^^^^^^^^^"
+                ls -ltra
+                '''
                 checkout scm 
+                
+                sh '''
+                echo "After checkout"
+                ls -ltra
+                echo "vvvvvvvvv"
+                '''
             }
         }
         stage ('Build') {
@@ -18,7 +28,7 @@ pipeline {
                     docker.withRegistry('https://registry.hub.docker.com', 'github-id') {            
                             app.push("${env.BUILD_NUMBER}")            
                             app.push("latest")        
-                    }   
+                    }
                 }
             }
         }
@@ -26,17 +36,18 @@ pipeline {
             steps {
                 echo 'check'
                 sh '''
-                    echo ls -ltra
+                    echo ^^^^^. ls -ltra
                     ls -ltra
                 
                 '''
                 script {
                     app.inside {            
                     sh '''
-                    echo INSIDE ls -ltra
+                    echo INSIDE ls -ltra ^^^^^
                     ls -ltra
                 
-                     '''                    }    
+                     '''                    
+                    }    
                 }
             }
         }  
