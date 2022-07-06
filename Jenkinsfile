@@ -45,7 +45,7 @@ pipeline {
             }
             steps {
                 sh '''
-                    EXTERNAL_ENV=$(jq -e)
+                    EXTERNAL_ENV=$(jq -n 'env')
                     echo "EXTERNAL_ENV=$EXTERNAL_ENV">cf_env
 //                     VERSION="0.0.62"
 //                     echo>cf_env
