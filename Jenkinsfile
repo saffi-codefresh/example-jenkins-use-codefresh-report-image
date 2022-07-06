@@ -24,8 +24,8 @@ pipeline {
                 script {
                     def app
                     app = docker.build("codefresh-io/example-jenkins-use-codefresh-report-image")
-                    // require credentials to be stored under github-id
-                    docker.withRegistry('https://registry.hub.docker.com', 'github-id') {            
+                    // require credentials to be stored under DOCKERHUB
+                    docker.withRegistry('https://registry.hub.docker.com', 'DOCKERHUB') {            
                             app.push("${env.BUILD_NUMBER}")            
                             app.push("latest")        
                     }
