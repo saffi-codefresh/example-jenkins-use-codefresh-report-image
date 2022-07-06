@@ -20,9 +20,9 @@ pipeline {
                             app.push("latest")        
                     }
                 }
-                script { // check
-                    docker.pull("safficodefresh/test-report-image-jenkins:${env.BUILD_NUMBER}")
-                }
+                sh '''
+                    docker pull safficodefresh/test-report-image-jenkins:${env.BUILD_NUMBER}
+                    '''
             }
         }
         
