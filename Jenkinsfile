@@ -9,7 +9,7 @@ pipeline {
         }
         stage ('Build') {
             steps {
-                echo 'Hello World'
+                echo 'Building'
                 sh 'ls -ltra'
                 script {
                     def app
@@ -21,10 +21,14 @@ pipeline {
                 }
             }
         }
-        stage('pull/run image') {           
-            app.inside {            
-                sh 'echo "check you can pull / run"'        
-            }    
+        stage('pull/run image') {   
+           echo 'check'
+            sh 'ls -ltra'
+            script {
+                app.inside {            
+                    sh 'echo "check you can pull / run"'        
+                }    
+            }
         }  
         
         stage('call-report') {
