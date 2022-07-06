@@ -47,7 +47,7 @@ pipeline {
                 docker { 
                     registryUrl 'https://quay.io'
 //                     registryCredentialsId 'quay-id'
-                    image "quay.io/codefresh/codefresh-report-image:0.0.61"
+                    image "quay.io/codefresh/codefresh-report-image:0.0.62"
                 }
             }
             steps {
