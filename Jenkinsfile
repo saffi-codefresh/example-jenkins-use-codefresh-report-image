@@ -32,7 +32,7 @@ pipeline {
                 CF_ENRICHERS = 'jira'
                 CF_BRANCH = 'main'
                 CF_HOST = 'https://saffi.pipeline-team.cf-cd.com'
-                CF_API_KEY = credentials('codefresh-token')
+                CF_API_KEY = credentials('CF_API_KEY')
                 CF_IMAGE = "safficodefresh/test-report-image-jenkins:${env.BUILD_NUMBER}"
                 CF_CONTAINER_REGISTRY_INTEGRATION= 'docker'
                 CF_JIRA_INTEGRATION= 'jira'
@@ -46,7 +46,7 @@ pipeline {
             agent {
                 docker { 
                     registryUrl 'https://quay.io'
-                    registryCredentialsId 'quay-id'
+//                     registryCredentialsId 'quay-id'
                     image "quay.io/codefresh/codefresh-report-image:0.0.61"
                 }
             }
