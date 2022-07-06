@@ -21,7 +21,8 @@ pipeline {
                     }
                 }
                 sh '''
-                    docker pull safficodefresh/test-report-image-jenkins:${env.BUILD_NUMBER}
+                    IMAGE_NAME="safficodefresh/test-report-image-jenkins:$BUILD_NUMBER"
+                    docker pull $IMAGE_NAME
                     '''
             }
         }
