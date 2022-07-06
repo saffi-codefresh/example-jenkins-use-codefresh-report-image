@@ -7,18 +7,21 @@ pipeline {
                 checkout scm 
             }
         }
-        stage ('Build') {
+        stage ('Build & Push ') {
             steps {
                 echo 'Building'
                 sh 'ls -ltra'
                 script {
                     def app
-                    app = docker.build("safficodefresh/test-report-image-jenkins:0.0.1")
+                    app = docker.build("safficodefresh/test-report-image-jenkins")
                     // require credentials to be stored under DOCKERHUB
                     docker.withRegistry('https://registry.hub.docker.com', 'DOCKERHUB') {            
                             app.push("${env.BUILD_NUMBER}")            
                             app.push("latest")        
                     }
+                }
+                script { // check
+                    docker.pull("safficodefresh/test-report-image-jenkins:${env.BUILD_NUMBER}")
                 }
             }
         }
@@ -28,16 +31,18 @@ pipeline {
                 CF_ENRICHERS = 'jira'
                 CF_BRANCH = 'main'
                 CF_HOST = 'https://saffi.pipeline-team.cf-cd.com'
-                CF_IMAGE = 'safficodefresh/test-report-image-jenkins:0.0.1'
+                CF_API_KEY = credentials('codefresh-token')
+                CF_IMAGE = "safficodefresh/test-report-image-jenkins:${env.BUILD_NUMBER}"
                 CF_CONTAINER_REGISTRY_INTEGRATION= 'docker'
                 CF_JIRA_INTEGRATION= 'jira'
-                CF_API_KEY = credentials('codefresh-token')
-                CF_JIRA_MESSAGE= "A message with embedded issue ( i.e. CR-11027 ) that would be use query jira for the ticket "
+                CF_JIRA_MESSAGE= '''
+                        A message with embedded issue ( i.e. CR-11027 )
+                        that would be use query jira for the ticket '''
                 CF_JIRA_PROJECT_PREFIX = 'CR'
                 CF_WORKFLOW_NAME = "${env.JOB_NAME}"
                 CF_WORKFLOW_URL = "${env.JOB_URL}"
                 CF_VERBOSE = "true"
-                CF_GIT_REPO = "myRepo"
+//                 CF_GIT_REPO = "myRepo"
             }
             agent {
                 docker { 
@@ -47,14 +52,14 @@ pipeline {
                     args "--net='host'"
                 }
             }
-            stages {
-                stage('report-image') {
+//             stages {
+//                 stage('report-image') {
                     steps {
                         sh 'node --version'
                         sh 'ls -ltra'
                         sh 'cd /code && yarn start'
-                    }
-                }
+//                     }
+//                 }
             }
         }
         
