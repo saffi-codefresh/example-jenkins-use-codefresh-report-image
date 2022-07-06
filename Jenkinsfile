@@ -13,8 +13,9 @@ pipeline {
                 sh 'ls -ltra'
                 script {
                     def app
-                    app = docker.build("codefresh-io/example-jenkins-use-codefresh-report-image")    
-                    docker.withRegistry('https://registry.hub.docker.com', 'git') {            
+                    app = docker.build("codefresh-io/example-jenkins-use-codefresh-report-image")
+                    // require credentials to be stored under git-id
+                    docker.withRegistry('https://registry.hub.docker.com', 'git-id') {            
                             app.push("${env.BUILD_NUMBER}")            
                             app.push("latest")        
                     }   
