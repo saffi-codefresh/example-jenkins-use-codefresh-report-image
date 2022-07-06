@@ -43,17 +43,26 @@ pipeline {
                 CF_WORKFLOW_NAME = "${env.JOB_NAME}"
                 CF_WORKFLOW_URL = "${env.JOB_URL}"
             }
-            agent {
-                docker { 
-                    registryUrl 'https://quay.io'
-//                     registryCredentialsId 'quay-id'
-                    image "quay.io/codefresh/codefresh-report-image:0.0.62"
-                }
-            }
             steps {
-                sh 'node --version'
-                sh 'cd /code && yarn start'
+                sh '''
+                    env|grep CF_>cf_env
+                    cat cf_env
+                    VERSION="0.0.62"
+                    docker run --env-file=cf_env "quay.io/codefresh/codefresh-report-image:$VERSION"                   
+                '''
             }
+            
+//             agent {
+//                 docker { 
+//                     registryUrl 'https://quay.io'
+//                      registryCredentialsId 'quay-id'
+//                     image "quay.io/codefresh/codefresh-report-image:0.0.62"
+//                 }
+//             }
+//             steps {
+//                 sh 'node --version'
+//                 sh 'cd /code && yarn start'
+//             }
         }
         
     }
