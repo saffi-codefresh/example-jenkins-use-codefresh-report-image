@@ -21,13 +21,22 @@ pipeline {
                 }
             }
         }
-        stage('pull/run image') {   
-           echo 'check'
-            sh 'ls -ltra'
-            script {
-                app.inside {            
-                    sh 'echo "check you can pull / run"'        
-                }    
+        stage('pull/run image') {  
+            steps {
+                echo 'check'
+                sh '''
+                    echo ls -ltra
+                    ls -ltra
+                
+                '''
+                script {
+                    app.inside {            
+                    sh '''
+                    echo INSIDE ls -ltra
+                    ls -ltra
+                
+                     '''                    }    
+                }
             }
         }  
         
