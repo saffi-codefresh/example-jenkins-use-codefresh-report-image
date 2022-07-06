@@ -4,17 +4,7 @@ pipeline {
     stages {
         stage('Clone repository') {               
             steps {
-                sh '''
-                echo "Before checkout ^^^^^^^^^"
-                ls -ltra
-                '''
                 checkout scm 
-                
-                sh '''
-                echo "After checkout"
-                ls -ltra
-                echo "vvvvvvvvv"
-                '''
             }
         }
         stage ('Build') {
@@ -32,34 +22,15 @@ pipeline {
                 }
             }
         }
-        stage('pull/run image') {  
-            steps {
-                echo 'check'
-                sh '''
-                    echo ^^^^^. ls -ltra
-                    ls -ltra
-                
-                '''
-                script {
-                    app.inside {            
-                    sh '''
-                    echo INSIDE ls -ltra ^^^^^
-                    ls -ltra
-                
-                     '''                    
-                    }    
-                }
-            }
-        }  
         
         stage('call-report') {
             environment {
-                // CF_ENRICHERS = 'jira'
-                // CF_BRANCH = 'PS-15'
+                CF_ENRICHERS = 'jira'
+                CF_BRANCH = 'main'
                 CF_HOST = 'https://saffi.pipeline-team.cf-cd.com'
                 CF_IMAGE = 'safficodefresh/test-report-image-jenkins:0.0.1'
                 CF_CONTAINER_REGISTRY_INTEGRATION= 'docker'
-                // CF_JIRA_INTEGRATION= 'jira'
+                CF_JIRA_INTEGRATION= 'jira'
                 CF_API_KEY = credentials('codefresh-token')
                 CF_JIRA_MESSAGE= "A message with embedded issue ( i.e. CR-11027 ) that would be use query jira for the ticket "
                 CF_JIRA_PROJECT_PREFIX = 'CR'
