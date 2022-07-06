@@ -42,25 +42,17 @@ pipeline {
                 CF_JIRA_PROJECT_PREFIX = 'CR'
                 CF_WORKFLOW_NAME = "${env.JOB_NAME}"
                 CF_WORKFLOW_URL = "${env.JOB_URL}"
-                CF_VERBOSE = "true"
-//                 CF_GIT_REPO = "myRepo"
             }
             agent {
                 docker { 
                     registryUrl 'https://quay.io'
                     registryCredentialsId 'quay-id'
                     image "quay.io/codefresh/codefresh-report-image:0.0.61"
-                    args "--net='host'"
                 }
             }
-//             stages {
-//                 stage('report-image') {
-                    steps {
-                        sh 'node --version'
-                        sh 'ls -ltra'
-                        sh 'cd /code && yarn start'
-//                     }
-//                 }
+            steps {
+                sh 'node --version'
+                sh 'cd /code && yarn start'
             }
         }
         
