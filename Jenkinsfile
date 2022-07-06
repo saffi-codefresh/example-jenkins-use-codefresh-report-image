@@ -23,7 +23,7 @@ pipeline {
                 sh 'ls -ltra'
                 script {
                     def app
-                    app = docker.build("codefresh-io/example-jenkins-use-codefresh-report-image")
+                    app = docker.build("safficodefresh/test-report-image-jenkins:0.0.1")
                     // require credentials to be stored under DOCKERHUB
                     docker.withRegistry('https://registry.hub.docker.com', 'DOCKERHUB') {            
                             app.push("${env.BUILD_NUMBER}")            
