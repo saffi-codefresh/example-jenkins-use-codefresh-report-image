@@ -45,8 +45,7 @@ pipeline {
             }
             steps {
                 sh '''
-                    env|grep CF_>cf_env
-                    cat cf_env
+                    env>cf_env
                     VERSION="0.0.62"
                     docker run --env-file=cf_env "quay.io/codefresh/codefresh-report-image:$VERSION"                   
                 '''
