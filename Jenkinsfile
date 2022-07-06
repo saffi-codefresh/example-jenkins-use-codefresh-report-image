@@ -51,7 +51,7 @@ pipeline {
                     
                     docker run --env-file=cf_env "quay.io/codefresh/codefresh-report-image:$VERSION"                   
                 '''
-//             }
+            }
 //             env>cf_env
 //                     cat cf_env
 //                     EXTERNAL_ENV=$(jq -n 'env'|base64)
