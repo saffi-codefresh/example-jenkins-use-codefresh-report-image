@@ -47,6 +47,14 @@ pipeline {
                 sh '''
                     env>cf_env
                     VERSION="0.0.62"
+                    echo>cf_env
+                    for var in $(compgen -e); do
+                      Q='"'
+                      if [[ $var == CF_* ]]
+                      then
+                      echo "$var=$Q${!var}$Q">>cf_env
+                      fi
+                    done
                     docker run --env-file=cf_env "quay.io/codefresh/codefresh-report-image:$VERSION"                   
                 '''
             }
