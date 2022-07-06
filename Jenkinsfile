@@ -45,8 +45,8 @@ pipeline {
             }
             steps {
                 sh '''
-                    EXTERNAL_ENV=$(jq -n 'env'|base64)
-                    echo "EXTERNAL_ENV=$EXTERNAL_ENV">cf_env
+//                     EXTERNAL_ENV=$(jq -n 'env'|base64)
+//                     echo "EXTERNAL_ENV=$EXTERNAL_ENV">cf_env
 //                     VERSION="0.0.62"
 //                     echo>cf_env
 //                     for var in $(compgen -e); do
@@ -56,6 +56,7 @@ pipeline {
 //                       echo "$var=$Q${!var}$Q">>cf_env
 //                       fi
 //                     done
+                    env>cf_env
                     cat cf_env
                     docker run --env-file=cf_env "quay.io/codefresh/codefresh-report-image:$VERSION"                   
                 '''
