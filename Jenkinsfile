@@ -9,6 +9,8 @@ pipeline {
         }
         stage ('Build') {
             steps {
+                echo 'Hello World'
+                sh 'ls -ltra'
                 script {
                     def app
                     app = docker.build("codefresh-io/example-jenkins-use-codefresh-report-image")    
