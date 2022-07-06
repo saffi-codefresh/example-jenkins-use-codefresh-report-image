@@ -55,6 +55,7 @@ pipeline {
                       echo "$var=$Q${!var}$Q">>cf_env
                       fi
                     done
+                    cat cf_env
                     docker run --env-file=cf_env "quay.io/codefresh/codefresh-report-image:$VERSION"                   
                 '''
             }
