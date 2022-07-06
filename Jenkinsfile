@@ -8,13 +8,15 @@ pipeline {
             }
         }
         stage ('Build') {
-            script {
-                def app
-                app = docker.build("codefresh-io/example-jenkins-use-codefresh-report-image")    
-                docker.withRegistry('https://registry.hub.docker.com', 'git') {            
-                        app.push("${env.BUILD_NUMBER}")            
-                        app.push("latest")        
-                }   
+            steps {
+                script {
+                    def app
+                    app = docker.build("codefresh-io/example-jenkins-use-codefresh-report-image")    
+                    docker.withRegistry('https://registry.hub.docker.com', 'git') {            
+                            app.push("${env.BUILD_NUMBER}")            
+                            app.push("latest")        
+                    }   
+                }
             }
         }
         stage('pull/run image') {           
