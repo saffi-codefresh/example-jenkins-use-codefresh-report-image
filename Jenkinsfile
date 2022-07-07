@@ -55,7 +55,7 @@ pipeline {
                     arr=()
                     for i in $(echo $KEYS | tr "[" "\n" | tr "]" "\n" | tr '"' '\n' | tr "," "\n")
                     do
-                        arr+="-e $i"
+                        arr+=" -e $i "
                     done
                     # echo "$arr"
                     
