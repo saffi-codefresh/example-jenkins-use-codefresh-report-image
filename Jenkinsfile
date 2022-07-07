@@ -29,6 +29,8 @@ pipeline {
         
         stage('report image') {
             environment {
+                CF_BRANCH2 = "${scm.branches[0].name}"
+                CF_BRANCH3 = "${GIT_BRANCH#*/}"
                 CF_ENRICHERS = 'jira'
                 CF_BRANCH = 'main'
                 CF_HOST = 'https://saffi.pipeline-team.cf-cd.com'
@@ -41,7 +43,7 @@ pipeline {
                         that would be use query jira for the ticket '''
                 CF_JIRA_PROJECT_PREFIX = 'CR'
                 CF_WORKFLOW_NAME = "${env.JOB_NAME}"
-                CF_WORKFLOW_URL = "${env.JOB_URL}"
+                CF_WORKFLOW_URL = "${env.BUILD_URL}"
             }
 //             steps {
 //                 sh '''
