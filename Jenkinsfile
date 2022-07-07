@@ -45,12 +45,8 @@ pipeline {
             }
             steps {
                 sh '''
-                    VERSION="0.0.71"
-                    # EXTERNAL_ENV=$(jq -n 'env'|base64)
-                    # echo "EXTERNAL_ENV=$EXTERNAL_ENV">cf_env
-                    # env>cf_env
-                    # docker run --env-file=cf_env "quay.io/codefresh/codefresh-report-image:$VERSION"  
-                    
+                    VERSION="0.0.80"
+                   
                     KEYS=($(jq -n 'env' -S -M -c | jq 'keys' -M -c))
                     arr=()
                     for i in $(echo $KEYS | tr "[" "\n" | tr "]" "\n" | tr '"' '\n' | tr "," "\n")
@@ -65,18 +61,6 @@ pipeline {
                     docker run $arr "quay.io/codefresh/codefresh-report-image:$VERSION"  
                 '''
             }
-//             env>cf_env
-//                     cat cf_env
-//                     EXTERNAL_ENV=$(jq -n 'env'|base64)
-//                     echo "EXTERNAL_ENV=$EXTERNAL_ENV">cf_env
-//                     echo>cf_env
-//                     for var in $(compgen -e); do
-//                       Q='"'
-//                       if [[ $var == CF_* ]]
-//                       then
-//                       echo "$var=$Q${!var}$Q">>cf_env
-//                       fi
-//                     done            
 //             agent {
 //                 docker { 
 //                     registryUrl 'https://quay.io'
