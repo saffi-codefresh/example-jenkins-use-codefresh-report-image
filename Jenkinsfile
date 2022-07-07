@@ -69,9 +69,11 @@ pipeline {
                 }
             }
             steps {
-                echo $(env)
-                sh 'node --version'
-                sh 'cd /code && yarn start'
+                
+                sh '''
+                    echo $(env)
+                    node --version
+                    cd /code && yarn start'''
             }
         }
         
