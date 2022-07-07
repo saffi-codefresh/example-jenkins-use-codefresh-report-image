@@ -72,7 +72,8 @@ pipeline {
             steps {
                 
                 sh '''
-                    export CF_BRANCH3 = "${GIT_BRANCH#*/}"
+                    echo $(env)
+                    CF_BRANCH3="${GIT_BRANCH#*/}"
                     echo $(env)
                     node --version
                     cd /code && yarn start'''
