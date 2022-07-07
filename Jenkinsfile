@@ -27,7 +27,7 @@ pipeline {
             }
         }
         
-        stage('call-report') {
+        stage('report image') {
             environment {
                 CF_ENRICHERS = 'jira'
                 CF_BRANCH = 'main'
@@ -69,6 +69,7 @@ pipeline {
                 }
             }
             steps {
+                echo $(env)
                 sh 'node --version'
                 sh 'cd /code && yarn start'
             }
