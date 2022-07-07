@@ -29,9 +29,7 @@ pipeline {
         
         stage('report image') {
             environment {
-                CF_BRANCH2 = "${scm.branches[0].name}"
                 CF_ENRICHERS = 'jira'
-                CF_BRANCH = 'main'
                 CF_HOST = 'https://saffi.pipeline-team.cf-cd.com'
                 CF_API_KEY = credentials('CF_API_KEY')
                 CF_IMAGE = "safficodefresh/test-report-image-jenkins:${env.BUILD_NUMBER}"
@@ -46,8 +44,9 @@ pipeline {
             }
 //             steps {
 //                 sh '''
+//                     # add git branch            
+//                     export CF_BRANCH="${GIT_BRANCH#*/}"
 //                     VERSION="0.0.80"
-                   
 //                     KEYS=($(jq -n 'env' -S -M -c | jq 'keys' -M -c))
 //                     arr=()
 //                     for i in $(echo $KEYS | tr "[" "\n" | tr "]" "\n" | tr '"' '\n' | tr "," "\n")
@@ -72,8 +71,9 @@ pipeline {
             steps {
                 
                 sh '''
-                    echo $(env)
-                    CF_BRANCH3="${GIT_BRANCH#*/}"
+                    # add git branch
+                    CF_BRANCH="${GIT_BRANCH#*/}"
+                    
                     echo $(env)
                     node --version
                     cd /code && yarn start'''
