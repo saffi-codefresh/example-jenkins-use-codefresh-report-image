@@ -64,7 +64,7 @@ pipeline {
             agent {
                 docker { 
                     registryUrl 'https://quay.io'
-                     registryCredentialsId 'quay-id'
+                    registryCredentialsId 'quay-id'
                     image "quay.io/codefresh/codefresh-report-image:0.0.80"
                 }
             }
