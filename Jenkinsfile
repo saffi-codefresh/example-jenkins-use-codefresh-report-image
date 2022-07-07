@@ -56,9 +56,10 @@ pipeline {
                     for var in $KEYS; do
                         if [[ $var == CF_* ]]
                         then
-                             arr+=(“-e $var”)
+                             arr+=("-e $var")
                         fi
                     done
+                    echo "USING arr $arr"
                     docker run ${arr[@]} "quay.io/codefresh/codefresh-report-image:$VERSION"  
                 '''
             }
