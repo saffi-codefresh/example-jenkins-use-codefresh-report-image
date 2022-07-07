@@ -53,13 +53,17 @@ pipeline {
                     
                     KEYS=$(jq -n 'env' -S -M -c | jq 'keys')
                     arr=()
+                
                     for var in $KEYS; do
                         if [[ $var == CF_* ]]
                         then
+                            echo -n " -e $var " >> vars.txt
                              arr+=("-e $var")
                         fi
                     done
                     echo "USING arr $arr"
+                    echo "vars.txt $(cat vars.txt)"
+                    
                     docker run ${arr[@]} "quay.io/codefresh/codefresh-report-image:$VERSION"  
                 '''
             }
