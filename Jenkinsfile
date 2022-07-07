@@ -34,7 +34,7 @@ pipeline {
                 CF_API_KEY = credentials('CF_API_KEY')
                 CF_IMAGE = "safficodefresh/test-report-image-jenkins:${env.BUILD_NUMBER}"
                 CF_CONTAINER_REGISTRY_INTEGRATION= 'docker'
-                CF_JIRA_INTEGRATION= 'jira'
+                CF_JIRA_INTEGRATION= 'jira git'
                 CF_JIRA_MESSAGE= '''
                         A message with embedded issue ( i.e. CR-11027 )
                         that would be use query jira for the ticket '''
