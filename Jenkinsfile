@@ -46,10 +46,10 @@ pipeline {
             steps {
                 sh '''
                     VERSION="0.0.71"
-                    EXTERNAL_ENV=$(jq -n 'env'|base64)
-                    echo "EXTERNAL_ENV=$EXTERNAL_ENV">cf_env
+                    # EXTERNAL_ENV=$(jq -n 'env'|base64)
+                    # echo "EXTERNAL_ENV=$EXTERNAL_ENV">cf_env
                     # env>cf_env
-                    docker run --env-file=cf_env "quay.io/codefresh/codefresh-report-image:$VERSION"  
+                    # docker run --env-file=cf_env "quay.io/codefresh/codefresh-report-image:$VERSION"  
                     
                     KEYS=$(jq -n 'env' -S -M -c | jq 'keys')
                     arr=()
