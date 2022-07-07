@@ -51,20 +51,15 @@ pipeline {
                     # env>cf_env
                     # docker run --env-file=cf_env "quay.io/codefresh/codefresh-report-image:$VERSION"  
                     
-                    KEYS=$(jq -n 'env' -S -M -c | jq 'keys')
+                    KEYS=($(jq -n 'env' -S -M -c | jq 'keys' -M -c))
                     arr=()
-                
-                    for var in $KEYS; do
-                        if [[ $var == "CF_* ]]
-                        then
-                            echo -n " -e $var " >> vars.txt
-                             arr+=("-e $var")
-                        fi
+                    for i in $(echo $KEYS | tr "[" "\n" | tr "]" "\n" | tr '"' '\n' | tr "," "\n")
+                    do
+                        arr+="-e $i"
                     done
-                    echo "USING arr $arr"
-                    echo "vars.txt $(cat vars.txt)"
+                    # echo "$arr"
                     
-                    docker run ${arr[@]} "quay.io/codefresh/codefresh-report-image:$VERSION"  
+                    docker run "$arr" "quay.io/codefresh/codefresh-report-image:$VERSION"  
                 '''
             }
 //             env>cf_env
