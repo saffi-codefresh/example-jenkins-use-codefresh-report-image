@@ -55,11 +55,14 @@ pipeline {
                     arr=()
                     for i in $(echo $KEYS | tr "[" "\n" | tr "]" "\n" | tr '"' '\n' | tr "," "\n")
                     do
+                      if [[ $i == CF_* ]]
+                      then 
                         arr+=" -e $i "
+                      fi                    
                     done
                     # echo "$arr"
                     
-                    docker run "$arr" "quay.io/codefresh/codefresh-report-image:$VERSION"  
+                    docker run $arr "quay.io/codefresh/codefresh-report-image:$VERSION"  
                 '''
             }
 //             env>cf_env
