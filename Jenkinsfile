@@ -42,6 +42,24 @@ pipeline {
                 CF_WORKFLOW_NAME = "${env.JOB_NAME}"
                 CF_WORKFLOW_URL = "${env.BUILD_URL}"
             }
+            agent {
+                docker { 
+                    registryUrl 'https://quay.io'
+                    registryCredentialsId 'quay-id'
+                    image "quay.io/codefresh/codefresh-report-image:0.0.80"
+                }
+            }
+            steps {
+                
+                sh '''
+                    # add git branch
+                    CF_BRANCH="${GIT_BRANCH#*/}"
+                    
+                    echo $(env)
+                    node --version
+                    cd /code && yarn start'''
+            }
+// // Alternative implementation            
 //             steps {
 //                 sh '''
 //                     # add git branch            
@@ -61,23 +79,6 @@ pipeline {
 //                     docker run $arr "quay.io/codefresh/codefresh-report-image:$VERSION"  
 //                 '''
 //             }
-            agent {
-                docker { 
-                    registryUrl 'https://quay.io'
-                    registryCredentialsId 'quay-id'
-                    image "quay.io/codefresh/codefresh-report-image:0.0.80"
-                }
-            }
-            steps {
-                
-                sh '''
-                    # add git branch
-                    CF_BRANCH="${GIT_BRANCH#*/}"
-                    
-                    echo $(env)
-                    node --version
-                    cd /code && yarn start'''
-            }
         }
         
     }
