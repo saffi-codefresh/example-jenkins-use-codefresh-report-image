@@ -30,7 +30,6 @@ pipeline {
         stage('report image') {
             environment {
                 CF_BRANCH2 = "${scm.branches[0].name}"
-                CF_BRANCH3 = "${GIT_BRANCH#*/}"
                 CF_ENRICHERS = 'jira'
                 CF_BRANCH = 'main'
                 CF_HOST = 'https://saffi.pipeline-team.cf-cd.com'
@@ -73,6 +72,7 @@ pipeline {
             steps {
                 
                 sh '''
+                    export CF_BRANCH3 = "${GIT_BRANCH#*/}"
                     echo $(env)
                     node --version
                     cd /code && yarn start'''
