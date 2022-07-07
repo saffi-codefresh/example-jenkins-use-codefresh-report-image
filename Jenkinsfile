@@ -55,7 +55,7 @@ pipeline {
                     arr=()
                 
                     for var in $KEYS; do
-                        if [[ $var == CF_* ]]
+                        if [[ $var == "CF_* ]]
                         then
                             echo -n " -e $var " >> vars.txt
                              arr+=("-e $var")
