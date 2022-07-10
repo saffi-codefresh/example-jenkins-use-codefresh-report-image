@@ -42,43 +42,44 @@ pipeline {
                 CF_WORKFLOW_NAME = "${env.JOB_NAME}"
                 CF_WORKFLOW_URL = "${env.BUILD_URL}"
             }
-            agent {
-                docker { 
-                    registryUrl 'https://quay.io'
-                    registryCredentialsId 'quay-id'
-                    image "quay.io/codefresh/codefresh-report-image:0.0.80"
-                }
-            }
-            steps {
-                
-                sh '''
-                    # add git branch
-                    CF_BRANCH="${GIT_BRANCH#*/}"
-                    
-                    echo $(env)
-                    node --version
-                    cd /code && yarn start'''
-            }
-// // Alternative implementation            
-//             steps {
-//                 sh '''
-//                     # add git branch            
-//                     export CF_BRANCH="${GIT_BRANCH#*/}"
-//                     VERSION="0.0.80"
-//                     KEYS=($(jq -n 'env' -S -M -c | jq 'keys' -M -c))
-//                     arr=()
-//                     for i in $(echo $KEYS | tr "[" "\n" | tr "]" "\n" | tr '"' '\n' | tr "," "\n")
-//                     do
-//                       if [[ $i == CF_* ]]
-//                       then 
-//                         arr+=" -e $i "
-//                       fi                    
-//                     done
-//                     # echo "$arr"
-                    
-//                     docker run $arr "quay.io/codefresh/codefresh-report-image:$VERSION"  
-//                 '''
+//             agent {
+//                 docker { 
+//                     registryUrl 'https://quay.io'
+//                     registryCredentialsId 'quay-id'
+//                     image "quay.io/codefresh/codefresh-report-image:0.0.80"
+//                 }
 //             }
+//             steps {
+                
+//                 sh '''
+//                     # add git branch
+//                     CF_BRANCH="${GIT_BRANCH#*/}"
+                    
+//                     echo $(env)
+//                     node --version
+//                     cd /code && yarn start'''
+//             }
+// Alternative implementation            
+            steps {
+                sh '''
+                    # add git branch            
+                    export CF_BRANCH="${GIT_BRANCH#*/}"
+                    VERSION="0.0.80"
+                    KEYS=($(jq -n 'env' -S -M -c | jq 'keys' -M -c))
+                    arr=()
+                    for i in $(echo $KEYS | tr "[" "\n" | tr "]" "\n" | tr '"' '\n' | tr "," "\n")
+                    do
+                      if [[ $i == CF_* ]]
+                      then 
+                        arr+=" -e $i "
+                      fi                    
+                    done
+                    # echo "$arr"
+                    
+                    # docker run $arr "quay.io/codefresh/codefresh-report-image:$VERSION"  
+                    docker run $arr saffi-codefresh/codefresh-report-image@a0.0.11 
+                '''
+            }
         }
         
     }
