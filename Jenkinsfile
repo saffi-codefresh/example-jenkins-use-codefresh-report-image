@@ -47,7 +47,7 @@ pipeline {
                 CF_CI_TYPE = "jenkins"
                 CF_GIT_REPO = "saffi-codefresh/example-jenkins-use-codefresh-report-image"
                 CF_GIT_PROVIDER = "github"
-                CF_BRANCH="main"
+//                 CF_BRANCH="main"
             }
             agent {
                 docker { 
@@ -60,9 +60,9 @@ pipeline {
                 
                 sh '''
                     # add git branch
-                    echo "CF_BRANCH is $CF_BRANCH"
                     export CF_BRANCH="${GIT_BRANCH#*/}"
-                    
+                    echo "CF_BRANCH is $CF_BRANCH"
+
                     echo $(env)
                     node --version
                     cd /code && yarn start'''
