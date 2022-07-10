@@ -46,6 +46,7 @@ pipeline {
                 // CF_GITHUB_API_PATH_PREFIX = "" // default empty - no prefix
                 CF_CI_TYPE = "jenkins"
                 CF_GIT_REPO = "saffi-codefresh/example-jenkins-use-codefresh-report-image"
+                CF_GIT_PROVIDER = "github"
             }
             agent {
                 docker { 
