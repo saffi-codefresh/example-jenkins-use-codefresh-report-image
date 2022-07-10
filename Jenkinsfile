@@ -78,6 +78,8 @@ pipeline {
                    
 //                 '''
 //             }
+//        }      
+//    }
 //              VERSION="0.0.80"
 //                     KEYS=($(jq -n 'env' -S -M -c | jq 'keys' -M -c))
 //                     arr=()
@@ -92,7 +94,4 @@ pipeline {
                     
 //                     # docker run $arr "quay.io/codefresh/codefresh-report-image:$VERSION"  
 //                     docker run $arr saffi-codefresh/codefresh-report-image:a0.0.4
-        }
-        
-    }
 }
