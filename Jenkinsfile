@@ -67,7 +67,7 @@ pipeline {
                     env | cut -f 1 -d "=" | grep -E "^CF_"  > cf_env
                     echo "using $(cat cd_env|xargs echo)"
                     # docker run --env-file=cf_env "quay.io/codefresh/codefresh-report-image:$VERSION"
-                    VERSION="a0.0.4"
+                    VERSION="a0.0.3"
                 docker run --env-file=cf_env "safficodefresh/codefresh-report-image:$VERSION"    
 
 
