@@ -46,14 +46,14 @@ pipeline {
                 // CF_GITHUB_API_PATH_PREFIX = "" // default empty - no prefix
                 CF_CI_TYPE = "jenkins"                
             }
-//             agent {
-//                 docker { 
-//                     registryUrl 'https://quay.io'
-//                     registryCredentialsId 'quay-id'
-//                     image "quay.io/codefresh/codefresh-report-image:0.0.80"
-//                 }
-//             }
-//             steps {
+            agent {
+                docker { 
+                    registryUrl 'https://quay.io'
+                    registryCredentialsId 'quay-id'
+                    image "quay.io/codefresh/codefresh-report-image:0.0.80"
+                }
+            }
+            steps {
                 
                 sh '''
                     # add git branch
@@ -78,8 +78,6 @@ pipeline {
                    
 //                 '''
 //             }
-//        }      
-//    }
 //              VERSION="0.0.80"
 //                     KEYS=($(jq -n 'env' -S -M -c | jq 'keys' -M -c))
 //                     arr=()
@@ -94,4 +92,6 @@ pipeline {
                     
 //                     # docker run $arr "quay.io/codefresh/codefresh-report-image:$VERSION"  
 //                     docker run $arr saffi-codefresh/codefresh-report-image:a0.0.4
+        }
+    }
 }
