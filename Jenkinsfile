@@ -44,7 +44,8 @@ pipeline {
                 CF_GITHUB_TOKEN = credentials('CF_GITHUB_TOKEN')
                 // CF_GITHUB_API_HOST_URL = "https://api.github.com" // Thats the default github service api
                 // CF_GITHUB_API_PATH_PREFIX = "" // default empty - no prefix
-                CF_CI_TYPE = "jenkins"                
+                CF_CI_TYPE = "jenkins"
+                CF_GIT_REPO = "saffi-codefresh/example-jenkins-use-codefresh-report-image"
             }
             agent {
                 docker { 
