@@ -64,22 +64,30 @@ pipeline {
                 sh '''
                     # add git branch            
                     export CF_BRANCH="${GIT_BRANCH#*/}"
-                    VERSION="0.0.80"
-                    KEYS=($(jq -n 'env' -S -M -c | jq 'keys' -M -c))
-                    arr=()
-                    for i in $(echo $KEYS | tr "[" "\n" | tr "]" "\n" | tr '"' '\n' | tr "," "\n")
-                    do
-                      if [[ $i == CF_* ]]
-                      then 
-                        arr+=" -e $i "
-                      fi                    
-                    done
-                    # echo "$arr"
-                    
-                    # docker run $arr "quay.io/codefresh/codefresh-report-image:$VERSION"  
-                    docker run $arr saffi-codefresh/codefresh-report-image:a0.0.4
+                    env | cut -f 1 -d "=" | grep -E "^CF_"  > cf_env
+                    echo "using $(cat cd_env|xargs echo)"
+                    # docker run --env-file=cf_env "quay.io/codefresh/codefresh-report-image:$VERSION"
+                    VERSION="a0.0.4"
+                docker run --env-file=cf_env "safficodefresh/codefresh-report-image:$VERSION"    
+
+
+                   
                 '''
             }
+//              VERSION="0.0.80"
+//                     KEYS=($(jq -n 'env' -S -M -c | jq 'keys' -M -c))
+//                     arr=()
+//                     for i in $(echo $KEYS | tr "[" "\n" | tr "]" "\n" | tr '"' '\n' | tr "," "\n")
+//                     do
+//                       if [[ $i == CF_* ]]
+//                       then 
+//                         arr+=" -e $i "
+//                       fi                    
+//                     done
+//                     # echo "$arr"
+                    
+//                     # docker run $arr "quay.io/codefresh/codefresh-report-image:$VERSION"  
+//                     docker run $arr saffi-codefresh/codefresh-report-image:a0.0.4
         }
         
     }
