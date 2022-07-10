@@ -29,7 +29,7 @@ pipeline {
         
         stage('report image') {
             environment {
-                CF_ENRICHERS = 'jira'
+                CF_ENRICHERS = 'jira git'
                 CF_HOST = 'https://saffi.pipeline-team.cf-cd.com'
                 CF_API_KEY = credentials('CF_API_KEY')
                 CF_IMAGE = "safficodefresh/test-report-image-jenkins:${env.BUILD_NUMBER}"
