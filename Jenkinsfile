@@ -77,7 +77,7 @@ pipeline {
                     # echo "$arr"
                     
                     # docker run $arr "quay.io/codefresh/codefresh-report-image:$VERSION"  
-                    docker run $arr saffi-codefresh/codefresh-report-image@a0.0.11 
+                    docker run $arr saffi-codefresh/codefresh-report-image@a0.0.12
                 '''
             }
         }
