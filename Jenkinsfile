@@ -60,7 +60,8 @@ pipeline {
                 
                 sh '''
                     # add git branch
-                    CF_BRANCH="${GIT_BRANCH#*/}"
+                    echo "CF_BRANCH is $CF_BRANCH"
+                    export CF_BRANCH="${GIT_BRANCH#*/}"
                     
                     echo $(env)
                     node --version
