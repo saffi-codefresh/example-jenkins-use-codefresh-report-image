@@ -41,6 +41,10 @@ pipeline {
                 CF_JIRA_PROJECT_PREFIX = 'CR'
                 CF_WORKFLOW_NAME = "${env.JOB_NAME}"
                 CF_WORKFLOW_URL = "${env.BUILD_URL}"
+                CF_GITHUB_TOKEN = credentials('CF_GITHUB_TOKEN')
+                // CF_GITHUB_API_HOST_URL = "https://api.github.com" // Thats the default github service api
+                // CF_GITHUB_API_PATH_PREFIX = "" // default empty - no prefix
+                CF_CI_TYPE = "jenkins"                
             }
 //             agent {
 //                 docker { 
@@ -51,29 +55,29 @@ pipeline {
 //             }
 //             steps {
                 
-//                 sh '''
-//                     # add git branch
-//                     CF_BRANCH="${GIT_BRANCH#*/}"
-                    
-//                     echo $(env)
-//                     node --version
-//                     cd /code && yarn start'''
-//             }
-// Alternative implementation            
-            steps {
                 sh '''
-                    # add git branch            
-                    export CF_BRANCH="${GIT_BRANCH#*/}"
-                    env | cut -f 1 -d "=" | grep -E "^CF_"  > cf_env
-                    echo "using $(cat cd_env|xargs echo)"
-                    # docker run --env-file=cf_env "quay.io/codefresh/codefresh-report-image:$VERSION"
-                    VERSION="a0.0.3"
-                docker run --env-file=cf_env "safficodefresh/codefresh-report-image:$VERSION"    
+                    # add git branch
+                    CF_BRANCH="${GIT_BRANCH#*/}"
+                    
+                    echo $(env)
+                    node --version
+                    cd /code && yarn start'''
+            }
+// Alternative implementation            
+//             steps {
+//                 sh '''
+//                     # add git branch            
+//                     export CF_BRANCH="${GIT_BRANCH#*/}"
+//                     env | cut -f 1 -d "=" | grep -E "^CF_"  > cf_env
+//                     echo "using $(cat cd_env|xargs echo)"
+//                     # docker run --env-file=cf_env "quay.io/codefresh/codefresh-report-image:$VERSION"
+//                     VERSION="a0.0.3"
+//                 docker run --env-file=cf_env "safficodefresh/codefresh-report-image:$VERSION"    
 
 
                    
-                '''
-            }
+//                 '''
+//             }
 //              VERSION="0.0.80"
 //                     KEYS=($(jq -n 'env' -S -M -c | jq 'keys' -M -c))
 //                     arr=()
