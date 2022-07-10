@@ -47,6 +47,7 @@ pipeline {
                 CF_CI_TYPE = "jenkins"
                 CF_GIT_REPO = "saffi-codefresh/example-jenkins-use-codefresh-report-image"
                 CF_GIT_PROVIDER = "github"
+                CF_BRANCH="main"
             }
             agent {
                 docker { 
